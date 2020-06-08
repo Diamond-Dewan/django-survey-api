@@ -58,13 +58,29 @@ class CreateAdminSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = ['id', 'title', 'owner']
+
+
+class QuestionTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['id', 'title']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    question = QuestionTitleSerializer(many=False)
+    user = UserSerializer(many=False)
+
     class Meta:
         model = Answer
-        fields = '__all__'
+        fields = ['id', 'question', 'choice', 'user']
 
     def create(self, validated_data):
         return Answer.objects.create(**validated_data)
+
