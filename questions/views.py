@@ -60,7 +60,8 @@ class AnswerListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff:
-            return Answer.objects.all()
+            answers = Answer.objects.all()
+            return answers
         return Answer.objects.filter(user=user)
 
 

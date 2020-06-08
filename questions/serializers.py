@@ -63,20 +63,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     answers = serializers.StringRelatedField(many=True, read_only=True)
+    owner_name = serializers.StringRelatedField(source='owner')
 
     class Meta:
         model = Question
-        fields = ['id', 'title', 'owner', 'answers']
+        fields = ['id', 'title', 'owner', 'owner_name', 'answers']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    question = serializers.StringRelatedField(many=False)
-    # user = UserSerializer(many=False)
-
     class Meta:
         model = Answer
-        fields = ['id', 'question', 'choice', 'user']
+        fields = ['id', 'choice', 'question', 'user']
 
     def create(self, validated_data):
         return Answer.objects.create(**validated_data)
-

@@ -14,7 +14,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 class Question(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     title = models.CharField(max_length=200)
 
     def __str__(self):
@@ -34,7 +34,7 @@ class Answer(models.Model):
         ('No', 'No')
     ]
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='votes')
     choice = models.CharField(max_length=3, choices=ANS_CHOICES)
 
     def __str__(self):
