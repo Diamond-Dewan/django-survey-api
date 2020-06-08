@@ -71,6 +71,9 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    question = serializers.StringRelatedField(read_only=False)
+    user = serializers.StringRelatedField(read_only=False)
+
     class Meta:
         model = Answer
         fields = ['id', 'choice', 'question', 'user']
