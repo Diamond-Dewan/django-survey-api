@@ -55,12 +55,6 @@ class CreateAdminSerializer(serializers.ModelSerializer):
         return admin
 
 
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = ['id', 'title', 'owner']
-
-
 class QuestionTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
@@ -71,6 +65,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(many=False)
+
+    class Meta:
+        model = Question
+        fields = ['id', 'title', 'owner']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
