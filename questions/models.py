@@ -36,3 +36,6 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     choice = models.CharField(max_length=3, choices=ANS_CHOICES)
+
+    def __str__(self):
+        return self.user.username+": "+self.choice

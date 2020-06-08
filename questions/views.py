@@ -48,14 +48,14 @@ class AnswerListAPIView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = AnswerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # if serializer.validated_data['user'] == self.request.user:
+            if serializer.validated_data['user'] == self.request.user:
                 if Answer.objects.filter(question=serializer.validated_data['question'], user=self.request.user):
                     return Response({"error": "You have already answered this question"})
                 else:
                     self.create(request, *args, **kwargs)
                     return Response({"success": "Thanks for your response :)"})
-            # else:
-            #     return Response({"userInvalid": "You can't vote for others!!"})
+            else:
+                return Response({"userInvalid": "You can't vote for others!!"})
 
     def get_queryset(self):
         user = self.request.user
