@@ -30,9 +30,9 @@ class Answer(models.Model):
     As there is only two possible answers
     """
     ANS_CHOICES = [
-        ('Y', 'Yes'),
-        ('N', 'No')
+        ('Yes', 'Yes'),
+        ('No', 'No')
     ]
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    choice = models.CharField(max_length=1, choices=ANS_CHOICES)
+    choice = models.CharField(max_length=3, choices=ANS_CHOICES)

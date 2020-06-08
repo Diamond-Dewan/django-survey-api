@@ -18,6 +18,6 @@ urlpatterns = [
 urlpatterns += [
     path('auth/', include('rest_framework.urls')),
     path('register/', CreateUserAPIView.as_view(), name='register'),
-    path('admin-register/', CreateUserAPIView.as_view(), name='admin-register'),
+    path('admin-register/', CreateAdminAPIView.as_view(), name='admin-register'),
     path('get-auth-token/', obtain_auth_token, name='get_auth_token'),
 ]

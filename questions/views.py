@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
-from .serializers import QuestionSerializer, AnswerSerializer, CreateUserSerializer
+from .serializers import QuestionSerializer, AnswerSerializer, CreateUserSerializer, CreateAdminSerializer
 from .models import Question, Answer
 from .permissions import IsOwnerOrReadOnly
 
@@ -59,6 +59,8 @@ class AnswerListAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_staff:
+            return Answer.objects.all()
         return Answer.objects.filter(user=user)
 
 
@@ -73,4 +75,4 @@ class CreateUserAPIView(generics.CreateAPIView):
 class CreateAdminAPIView(generics.CreateAPIView):
     model = get_user_model()
     permission_classes = [AllowAny]
-    serializer_class = CreateUserSerializer
+    serializer_class = CreateAdminSerializer
