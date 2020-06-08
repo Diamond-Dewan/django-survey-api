@@ -59,21 +59,12 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = '__all__'
-        read_only_field = ['id']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    question = serializers.PrimaryKeyRelatedField(
-        queryset=Question.objects.all()
-    )
-    user = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all()
-    )
-
     class Meta:
         model = Answer
-        fields = ['id', 'question', 'user', 'choice']
-        read_only_field = ['id']
+        fields = '__all__'
 
     def create(self, validated_data):
         return Answer.objects.create(**validated_data)
