@@ -21,8 +21,8 @@ class Question(models.Model):
         return self.title
 
     @property
-    def total_votes(self):
-        return self.answers.count()
+    def get_question_title(self):
+        return self.title
 
 
 class Answer(models.Model):
@@ -39,3 +39,12 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.user.username+": "+self.choice
+
+    @property
+    def question_title(self):
+        return self.question.get_question_title
+
+    @property
+    def user_name(self):
+        return self.user.get_username()
+

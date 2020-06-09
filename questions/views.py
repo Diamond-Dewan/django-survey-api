@@ -10,8 +10,7 @@ from .permissions import IsOwnerOrReadOnly
 class QuestionAPIView(generics.ListCreateAPIView):
     """
     List & create questions
-    /api/v1/question/ GET
-    /api/v1/question/ POST
+    /api/v1/question/ GET & POST
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -40,7 +39,7 @@ class QuestionUpdateAPIView(generics.UpdateAPIView):
 class AnswerListAPIView(generics.ListCreateAPIView):
     """
         User answers
-        /api/v1/qanswer/<id>/ POST & GET
+        /api/v1/qanswer/ POST & GET
     """
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated]
@@ -60,8 +59,7 @@ class AnswerListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff:
-            answers = Answer.objects.all()
-            return answers
+            return Answer.objects.all()
         return Answer.objects.filter(user=user)
 
 
